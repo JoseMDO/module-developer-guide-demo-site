@@ -24,6 +24,7 @@ class HelloWorldBlock extends BlockBase {
   public function build(): array {
     $build['content'] = [
       '#markup' => $this->t('Hello, World!'),
+      '#markup' => $this->t(date('Y/m/d')),
     ];
     return $build;
   }
