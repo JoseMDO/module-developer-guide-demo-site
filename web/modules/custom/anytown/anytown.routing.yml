@@ -18,4 +18,4 @@ anytown.weather_page:
     style: 'short'
   requirements:
     # What permissions a user needs to have in order to view this page.
-    _permission: 'access content'
+    _permission: 'view weekly weather'
