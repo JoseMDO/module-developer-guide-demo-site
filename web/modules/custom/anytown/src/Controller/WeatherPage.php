@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare(strict_types=1);
 
@@ -116,6 +116,10 @@ class WeatherPage extends ControllerBase {
     $build = [
       // Which theme hook to use for this content. See anytown_theme().
       '#theme' => 'weather_page',
+      // Attach the CSS and JavaScript for the page.
+      '#attached' => [
+        'library' => ['anytown/forecast'],
+      ],
       // When passing a render array to Twig template file any top level array
       // element that starts with a '#' will be a variable in the template file.
       // Example: {{ weather_intro }}.
@@ -133,10 +137,11 @@ class WeatherPage extends ControllerBase {
         ],
       ],
     ];
-    
+
     return $build;
   }
 
 }
+
 
 
