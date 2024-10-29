@@ -77,7 +77,13 @@ class WeatherPage extends ControllerBase {
           ],
           [
             'data' => [
-              '#markup' => "<em>{$description}</em> with a high of {$high} and a low of {$low}",
+              '#markup' => $this->t('%description with a high of @high and a low of @low',
+                [
+                  '%description' => $description,
+                  '@high' => $high,
+                  '@low' => $low,
+                ]
+              ),
             ],
           ],
         ];
@@ -103,13 +109,18 @@ class WeatherPage extends ControllerBase {
       // Summary forecast.
       $short_forecast = [
         '#type' => 'markup',
-        '#markup' => "The high for the weekend is {$highest} and the low is {$lowest}.",
+        '#markup' => '<p>' . $this->t('The high for the weekend is @highest and the low is @lowest.',
+          [
+            '@highest' => $highest,
+            '@lowest' => $lowest,
+          ]
+        ) . '</p>',
       ];
 
     }
     else {
       // Or, display a message if we can't get the current forecast.
-      $weather_forecast = ['#markup' => '<p>Could not get the weather forecast. Dress for anything.</p>'];
+      $weather_forecast = ['#markup' => '<p>' . $this->t('Could not get the weather forecast. Dress for anything.') . '</p>'];
       $short_forecast = NULL;
     }
 
@@ -124,16 +135,16 @@ class WeatherPage extends ControllerBase {
       // element that starts with a '#' will be a variable in the template file.
       // Example: {{ weather_intro }}.
       '#weather_intro' => [
-        '#markup' => "<p>Check out this weekend's weather forecast and come prepared. The market is mostly outside, and takes place rain or shine.</p>",
+        '#markup' => "<p>" . $this->t("Check out this weekend's weather forecast and come prepared. The market is mostly outside, and takes place rain or shine") . "</p>",
       ],
       '#weather_forecast' => $weather_forecast,
       '#short_forecast' => $short_forecast,
       '#weather_closures' => [
         '#theme' => 'item_list',
-        '#title' => 'Weather related closures',
+        '#title' => $this->t('Weather related closures'),
         '#items' => [
-          'Ice rink closed until winter - please stay off while we prepare it.',
-          'Parking behind Apple Lane is still closed from all the rain last weekend.',
+          $this->t('Ice rink closed until winter - please stay off while we prepare it.'),
+          $this->t('Parking behind Apple Lane is still closed from all the rain last weekend.'),
         ],
       ],
     ];
@@ -145,3 +156,4 @@ class WeatherPage extends ControllerBase {
 
 
 
+$url = 'https://raw.githubusercontent.com/DrupalizeMe/module-developer-guide-demo-site/main/backups/weather_forecast.json';
