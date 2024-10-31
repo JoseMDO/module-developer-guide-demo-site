@@ -1,3 +1,5 @@
+# Menu links for the anytown module.
+
 # Each link needs a unique name. We recommend prefixing links with the name of
 # your module. A links.menu.yml file can contain any number of link definitions.
 anytown.weather:
@@ -6,3 +8,9 @@ anytown.weather:
   menu_name: main
   # From anytown.routing.yml.
   route_name: anytown.weather_page
+
+anytown.settings:
+  title: Anytown Settings
+  parent: system.admin_config_system
+  route_name: anytown.settings
+  weight: 10
