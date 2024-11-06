@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 declare(strict_types=1);
 
@@ -46,7 +46,16 @@ class WeatherPage extends ControllerBase {
     // Style should be one of 'short', or 'extended'. And default to 'short'.
     $style = (in_array($style, ['short', 'extended'])) ? $style : 'short';
 
+    // Get the configuration object from the configuration factory service.
+    $settings = $this->config('anytown.settings');
+
+    // This is hypothetical, because our API is mocked, but shows how you could
+    // use the location setting in constructing the API query.
     $url = 'https://raw.githubusercontent.com/DrupalizeMe/module-developer-guide-demo-site/main/backups/weather_forecast.json';
+    if ($location = $settings->get('location')) {
+      $url .= '?location=' . $location;
+    }
+
     $forecast_data = $this->forecastClient->getForecastData($url);
 
     $table_rows = [];
@@ -141,11 +150,8 @@ class WeatherPage extends ControllerBase {
       '#short_forecast' => $short_forecast,
       '#weather_closures' => [
         '#theme' => 'item_list',
-        '#title' => $this->t('Weather related closures'),
-        '#items' => [
-          $this->t('Ice rink closed until winter - please stay off while we prepare it.'),
-          $this->t('Parking behind Apple Lane is still closed from all the rain last weekend.'),
-        ],
+        '#title' => 'Weather related closures',
+        '#items' => explode(PHP_EOL, $settings->get('weather_closures')),
       ],
     ];
 
@@ -153,7 +159,6 @@ class WeatherPage extends ControllerBase {
   }
 
 }
-
 
 
 $url = 'https://raw.githubusercontent.com/DrupalizeMe/module-developer-guide-demo-site/main/backups/weather_forecast.json';

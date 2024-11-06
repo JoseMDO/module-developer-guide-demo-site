@@ -71,22 +71,22 @@ final class SettingsForm extends ConfigFormBase {
     if (!$value || strlen((string) $value) !== 5) {
       // Set an error on the specific field. This will halt form processing
       // and re-display the form with errors for the user to correct.
-      $form_state->setErrorByName('location', $this->t('Invalid ZIP code'));
+      $form_state->setErrorByName('location', $this->t('Invalid zip-code'));
     }
 
   }
-  
-    /**
-     * {@inheritdoc}
-     */
-    public function submitForm(array &$form, FormStateInterface $form_state) {
-      $this->config(self::SETTINGS)
-        ->set('display_forecast', $form_state->getValue('display_forecast'))
-        ->set('location', $form_state->getValue('location'))
-        ->set('weather_closures', $form_state->getValue('weather_closures'))
-        ->save();
-  
-      $this->messenger()->addMessage($this->t('Anytown configuration updated.'));
-    }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    $this->config(self::SETTINGS)
+      ->set('display_forecast', $form_state->getValue('display_forecast'))
+      ->set('location', $form_state->getValue('location'))
+      ->set('weather_closures', $form_state->getValue('weather_closures'))
+      ->save();
+
+    $this->messenger()->addMessage($this->t('Anytown configuration updated.'));
+  }
 
 }
